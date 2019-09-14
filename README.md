@@ -4,7 +4,7 @@ OSaSP lab #1
 
 ## Screenshot
 
-![program interface](screenshot.jpeg)
+![program interface](screenshot.jpg)
 
 ## TASK
 
