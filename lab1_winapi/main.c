@@ -16,6 +16,7 @@
 #define RECTANGLE_WIDTH 100
 #define RECTANGLE_HEIGHT 50
 #define SPRITES_COLOR RGB(255, 127, 128);
+#define BITMAP_FNAME L"cat.bmp"
 
 #define GET_X_LPARAM(lp)    ((int)(short)LOWORD(lp))
 #define GET_Y_LPARAM(lp)    ((int)(short)HIWORD(lp))
@@ -89,7 +90,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
 	switch (message)
 	{
 	case WM_CREATE:	
-		hBitmap = (HBITMAP)LoadImage(NULL, L"cat.bmp", IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
+		hBitmap = (HBITMAP)LoadImage(NULL, BITMAP_FNAME, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE | LR_CREATEDIBSECTION);
 		GetObject(hBitmap, sizeof(BITMAP), &Bitmap);
 		AddMenu(hWnd);
 		break;
@@ -198,8 +199,7 @@ void PaintSprite(HWND hWnd)
 		HDC memDC = CreateCompatibleDC(winDC);
 
 		HBITMAP oldBitmap = SelectObject(memDC, hBitmap);
-		BitBlt(winDC, X, Y, Bitmap.bmHeight, Bitmap.bmWidth, memDC, 0, 0, SRCCOPY);
-		SelectObject(memDC, oldBitmap);
+		TransparentBlt(winDC, X, Y, Bitmap.bmWidth, Bitmap.bmHeight, memDC, 0, 0, Bitmap.bmWidth, Bitmap.bmHeight, RGB(255, 255, 255));
 		DeleteDC(memDC);
 	}
 	else
